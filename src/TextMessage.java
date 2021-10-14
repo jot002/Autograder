@@ -1,3 +1,4 @@
+
 public class TextMessage extends Message {
 
     // Error message to use in OperationDeniedException
@@ -9,13 +10,24 @@ public class TextMessage extends Message {
 
     public TextMessage(User sender, String text)
             throws OperationDeniedException {
-        /* TODO */
+        super(sender);
+        this.contents = text;
+        if (text.length() > 500) {
+            throw new OperationDeniedException(EXCEED_MAX_LENGTH);
+        }
+        if (sender == null || text == null) {
+            throw new IllegalArgumentException();
+        }
     }
 
     // Yuxuan [16:38:36.868882500]: A sample text message.
     public String getContents() {
-        /* TODO */
-        return null;
+        String senderName = this.getSender().displayName();;
+        String dateTime = this.getDate().toString();
+        String sampleText = this.contents;
+        String sentence = String.format("% [%]:  %", senderName,
+                dateTime, sampleText);
+        return sentence;
     }
 
 }

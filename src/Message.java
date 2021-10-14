@@ -12,8 +12,11 @@ public abstract class Message {
     protected String contents;
 
     public Message(User sender) {
+        if (sender == null) {
+            throw new IllegalArgumentException();
+        }
         this.date = LocalDate.now();
-        /* TODO */
+        this.sender = sender;
     }
 
     public LocalDate getDate() {

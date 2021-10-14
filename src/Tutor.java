@@ -6,17 +6,25 @@ public class Tutor extends User {
     private String customTitle;
 
     public Tutor(String username, String bio) {
-        /* TODO */
+        super(username, bio);
+        this.customTitle = "Tutor";
     }
 
     public String fetchMessage(MessageExchange me) {
-        /* TODO */
-        return null;
+        if (me == null) {
+            throw new IllegalArgumentException();
+        }
+        if (!this.rooms.contains(me)) {
+            throw new IllegalArgumentException();
+        }
+        String sentence = me.getLog(this).getContents() + "\n";
+        return sentence;
     }
 
     public String displayName() {
-        /* TODO */
-        return null;
+        String sentence = String.format("<%> %", this.customTitle,
+                this.username);
+        return sentence;
     }
 
     public void setCustomTitle(String newTitle) {

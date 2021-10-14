@@ -20,8 +20,11 @@ public class Student extends User {
         if (!this.rooms.contains(me)) {
             throw new IllegalArgumentException();
         }
-        this.getContents();
-        return sentence;
+        for (Message x :  me.getLog(this)) {
+            x.getContents()
+        }
+        String message = me.getLog(this).getContents() + "\n";
+        return message;
     }
 
     public String displayName() {

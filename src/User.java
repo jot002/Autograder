@@ -34,23 +34,42 @@ public abstract class User {
     }
 
     public void joinRoom(MessageExchange me) throws OperationDeniedException {
-        if (me.addUser(this) == false) {
-            throw new OperationDeniedException(JOIN_ROOM_FAILED);
-        }
         if (me == null) {
             throw new IllegalArgumentException();
+        }
+        if (rooms.contains(this)) {
+            throw new OperationDeniedException(JOIN_ROOM_FAILED);
+        }
+        if (me.addUser(this) == false) {
+            throw new OperationDeniedException(JOIN_ROOM_FAILED);
         }
     }
 
     public void quitRoom(MessageExchange me) {
-        me.removeUser(this, this);
         if (me == null) {
             throw new IllegalArgumentException();
         }
+        me.removeUser(this, this);
+
     }
 
     public void sendMessage(MessageExchange me, String contents, int lines) {
-        Message newMessage = new Message(me);
+        if (me == null || contents == null) {
+            throw new IllegalArgumentException();
+
+        }
+        if (!rooms.contains(this)) {
+            throw new IllegalArgumentException();
+        }
+        try {
+            if (lines == -1) {
+                TextMessage newMessage = new TextMessage(this, contents);
+            }
+        }
+        catch (OperationDeniedException ODE){
+            System.out.println(ODE.getMessage());
+        }
+        // send to message exchange room
     }
 
     public abstract String fetchMessage(MessageExchange me);

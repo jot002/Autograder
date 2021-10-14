@@ -58,18 +58,25 @@ public abstract class User {
             throw new IllegalArgumentException();
 
         }
-        if (!rooms.contains(this)) {
+        if (!this.rooms.contains(me)) {
             throw new IllegalArgumentException();
         }
         try {
             if (lines == -1) {
                 TextMessage newMessage = new TextMessage(this, contents);
+                // send to message exchange room
+                me.recordMessage(newMessage);
+            }
+            else {
+                CodeMessage newMessage = new CodeMessage(this, contents, lines);
+                // send to message exchange room
+                me.recordMessage(newMessage);
             }
         }
         catch (OperationDeniedException ODE){
             System.out.println(ODE.getMessage());
         }
-        // send to message exchange room
+
     }
 
     public abstract String fetchMessage(MessageExchange me);

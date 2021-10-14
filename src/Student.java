@@ -20,11 +20,32 @@ public class Student extends User {
         if (!this.rooms.contains(me)) {
             throw new IllegalArgumentException();
         }
-        for (Message x :  me.getLog(this)) {
-            x.getContents()
+        if (me.getLog(this).size() < MAX_MSG_SIZE) {
+            String sentence = "";
+            for (Message piece :  me.getLog(this)) {
+                if (piece.getClass() == TextMessage ) {
+                    sentence = sentence + piece.getContents() + "\n";
+                }
+                else {
+                    sentence = sentence + FETCH_DENIED_MSG + "\n";
+                }
+            }
+            return sentence;
         }
-        String message = me.getLog(this).getContents() + "\n";
-        return message;
+        // fetch the last 100 messages
+        else {
+            String sentence = "";
+            for (int i = me.getLog(this).size() - MAX_MSG_SIZE;
+                 i < me.getLog(this).size(); i++) {
+                if (me.getLog(this).get(i).getClass() == TextMessage) {
+                    sentence = sentence + me.getLog(this).get(i) + "\n";
+                }
+                else {
+                    sentence = sentence + FETCH_DENIED_MSG + "\n";
+                }
+            }
+            return sentence;
+        }
     }
 
     public String displayName() {

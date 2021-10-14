@@ -26,12 +26,27 @@ public class Autograder implements MessageExchange {
     private Tutor tutor;
 
     public Autograder(Tutor tutor) {
-        /* TODO */
+        this.users = new ArrayList<User>();
+        this.log = new ArrayList<Message>();
+        this.results = new ArrayList<String>();
+        this.tutor = tutor;
     }
 
     public ArrayList<Message> getLog(User requester) {
-        /* TODO */
-        return null;
+        if (stopSession()) {
+            return null;
+        }
+        if (requester.getClass() == Tutor) {
+            return this.getLog(requester);
+        }
+        if (requester.getClass() == Student) {
+            if (this.getLog(requester).size()<100) {
+                return this.getLog(requester);
+            }
+            else {
+                return requester.fetchMessage(this.rooms);
+            }
+        }
     }
     public ArrayList<String> getResults(){
         /* TODO */
@@ -49,8 +64,8 @@ public class Autograder implements MessageExchange {
     }
 
     public ArrayList<User> getUsers() {
-        /* TODO */
-        return null;
+        if ()
+        return this.users;
     }
 
     public boolean recordMessage(Message m) {

@@ -14,28 +14,43 @@ public abstract class User {
     protected ArrayList<MessageExchange> rooms;
 
     public User(String username, String bio) {
-        /* TODO */
+        this.rooms = new ArrayList<MessageExchange>();
+        this.username = username;
+        this.bio = bio;
+        if (bio == null || username == null) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public void setBio(String newBio) {
-        /* TODO */
+        this.bio = newBio;
+        if (newBio == null) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public String displayBio() {
-        /* TODO */
-        return null;
+        return this.bio;
     }
 
     public void joinRoom(MessageExchange me) throws OperationDeniedException {
-        /* TODO */
+        if (me.addUser(this) == false) {
+            throw new OperationDeniedException(JOIN_ROOM_FAILED);
+        }
+        if (me == null) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public void quitRoom(MessageExchange me) {
-        /* TODO */
+        me.removeUser(this, this);
+        if (me == null) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public void sendMessage(MessageExchange me, String contents, int lines) {
-        /* TODO */
+        Message newMessage = new Message(me);
     }
 
     public abstract String fetchMessage(MessageExchange me);

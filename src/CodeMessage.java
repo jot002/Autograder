@@ -21,7 +21,7 @@ public class CodeMessage extends Message {
             throws OperationDeniedException {
         super(sender);
         this.contents = codeSource;
-        String[] subparts = codeSource.split(".");
+        String[] subparts = codeSource.split("\\.");
         String lastPart = subparts[subparts.length - 1];
         this.extension = lastPart.toLowerCase();
         this.lines = lines;

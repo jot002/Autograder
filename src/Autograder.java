@@ -122,10 +122,33 @@ public class Autograder implements MessageExchange {
         }
         for (Message logX : this.log) {
             if (logX instanceof CodeMessage) {
+                int numLines = ((CodeMessage) logX).getLines();
+                int answer = (int) Math.ceil(numLines / 10.0);
+                if (answer > 15) {
+                    int resolved = 15;
+                    int unresolved = answer - 15;
+                    String sentence = String.format("This ticket resolves % " +
+                            "lines, % lines unresolved", resolved, unresolved);
+                    this.results.add(sentence);
+                    return sentence;
+                }
+                else {
+                    int resolved= answer;
+                    int unresolved = 0;
+                    String sentence = String.format("This ticket resolves % " +
+                            "lines, % lines unresolved", resolved, unresolved);
+                    this.results.add(sentence);
+                    return sentence;
+                }
 
             }
-            this.results.add(logX.getContents());
+            else {
+                String sentence = "This ticket doesn’t resolve a codeMessage";
+                this.results.add(sentence);
+                return sentence;
+            }
         }
+        return null;
     }
     public boolean stopSession(){
         if (this.tutor == null) {

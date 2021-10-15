@@ -81,16 +81,16 @@ public class MessengerApplicationTest {
     }
 
 
-    @Test
-    public void testTextMessage() {
-        String sentence = "I like dogs.";
-        User person1 = new Student("jtran", "Student");
-        try {
-            Message test1 = new TextMessage(person1, sentence);
-        }
-        catch (OperationDeniedException ODE) {
-
-        }
-
-    }
+//    @Test
+//    public void testTextMessage() {
+//        String sentence = "I like dogs.";
+//        User person1 = new Student("jtran", "Student");
+//        try {
+//            Message test1 = new TextMessage(person1, sentence);
+//        }
+//        catch (OperationDeniedException ODE) {
+//
+//        }
+//
+//    }
 }

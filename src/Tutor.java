@@ -25,7 +25,7 @@ public class Tutor extends User {
     }
 
     public String displayName() {
-        String sentence = String.format("<%> %", this.customTitle,
+        String sentence = String.format("<%s> %s", this.customTitle,
                 this.username);
         return sentence;
     }

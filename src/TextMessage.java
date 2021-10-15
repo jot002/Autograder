@@ -25,7 +25,7 @@ public class TextMessage extends Message {
         String senderName = this.getSender().displayName();;
         String dateTime = this.getDate().toString();
         String sampleText = this.contents;
-        String sentence = String.format("% [%]:  %", senderName,
+        String sentence = String.format("%s [%s]: %s", senderName,
                 dateTime, sampleText);
         return sentence;
     }

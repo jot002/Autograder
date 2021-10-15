@@ -23,7 +23,7 @@ public class Student extends User {
         if (me.getLog(this).size() < MAX_MSG_SIZE) {
             String sentence = "";
             for (Message piece :  me.getLog(this)) {
-                if (piece.getClass() == TextMessage ) {
+                if (piece instanceof TextMessage) {
                     sentence = sentence + piece.getContents() + "\n";
                 }
                 else {
@@ -37,7 +37,7 @@ public class Student extends User {
             String sentence = "";
             for (int i = me.getLog(this).size() - MAX_MSG_SIZE;
                  i < me.getLog(this).size(); i++) {
-                if (me.getLog(this).get(i).getClass() == TextMessage) {
+                if (me.getLog(this).get(i) instanceof TextMessage) {
                     sentence = sentence + me.getLog(this).get(i) + "\n";
                 }
                 else {

@@ -30,56 +30,115 @@ public class Autograder implements MessageExchange {
         this.log = new ArrayList<Message>();
         this.results = new ArrayList<String>();
         this.tutor = tutor;
+        this.addUser(tutor);
     }
 
     public ArrayList<Message> getLog(User requester) {
-        if (stopSession()) {
+        if (this.tutor == null) {
             return null;
         }
-        if (requester.getClass() == Tutor) {
+        if (requester instanceof Tutor) {
             return this.getLog(requester);
         }
-        if (requester.getClass() == Student) {
-            if (this.getLog(requester).size()<100) {
-                return this.getLog(requester);
+        if (requester instanceof Student) {
+            if (this.getLog(requester).size() < 100) {
+                return this.log;
             }
             else {
-                return requester.fetchMessage(this.rooms);
+                ArrayList<Message> newLog = new ArrayList<Message>();
+                for (int i = this.log.size() - MAX_MSG_SIZE;
+                       i < this.log.size(); i++) {
+                newLog.add(this.log.get(i));
+                }
+                return newLog;
             }
         }
-    }
-    public ArrayList<String> getResults(){
-        /* TODO */
         return null;
     }
 
+    public ArrayList<String> getResults(){
+        if (this.tutor == null) {
+            return null;
+        }
+        return this.results;
+    }
+
     public boolean addUser(User u) {
-        /* TODO */
-        return false;
+        if (this.tutor == null) {
+            return false;
+        }
+        if (!this.users.contains(u)) {
+            this.users.add(u);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean removeUser(User requester, User u) {
-        /* TODO */
+        if (this.tutor == null) {
+            return false;
+        }
+        if (!this.users.contains(u)) {
+            return false;
+        }
+        if (requester instanceof Tutor && u instanceof Student) {
+            this.users.remove(u);
+            u.rooms.remove(u);
+            return true;
+        }
+        if (requester instanceof Student && u instanceof Student) {
+            this.users.remove(u);
+            u.rooms.remove(u);
+            return true;
+        }
         return false;
     }
 
     public ArrayList<User> getUsers() {
-        if ()
+        if (this.tutor == null) {
+            return null;
+        }
         return this.users;
     }
 
     public boolean recordMessage(Message m) {
-        /* TODO */
-        return false;
+        if (this.tutor == null) {
+            return false;
+        }
+        log.add(m);
+        return true;
     }
 
     public String resolveTicket(User requester) throws OperationDeniedException {
-        /* TODO */
-        return null;
+        if (this.tutor == null) {
+            throw new OperationDeniedException(SESSION_ENDED);
+        }
+        if (requester instanceof Student) {
+            throw new OperationDeniedException(NO_ACCESS);
+        }
+        if (this.log.size() == 0) {
+            throw new OperationDeniedException(NO_LOGS);
+        }
+        for (Message logX : this.log) {
+            if (logX instanceof CodeMessage) {
+
+            }
+            this.results.add(logX.getContents());
+        }
     }
     public boolean stopSession(){
-        /*TODO*/
-        return false;
+        if (this.tutor == null) {
+            return false;
+        }
+        for (User person : this.users) {
+            this.users.remove(person);
+        }
+        for (Message logX : this.log) {
+            this.log.remove(logX);
+        }
+        this.tutor = null;
+        return true;
     }
 
 }

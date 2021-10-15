@@ -35,12 +35,16 @@ public class Tutor extends User {
     }
 
     public MessageExchange createAutograder(ArrayList<User> users) {
-//        Autograder autograder = new Autograder(this);
-//        for (User person : users) {
-//            try {
-//                person.joinRoom(this);
-//            }
-//        }
+        Autograder autograder = new Autograder(this);
+        for (User person : users) {
+            try {
+                person.joinRoom(autograder);
+            }
+            catch (OperationDeniedException ODE) {
+                ODE.getMessage();
+            }
+        }
+        return autograder;
     }
 
 }

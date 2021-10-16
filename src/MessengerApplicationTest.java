@@ -191,17 +191,17 @@ public class MessengerApplicationTest {
         try {
             TextMessage tm = new TextMessage(person1, "A text message.");
             String expected = "jtran [" + date + "]: A text message.";
-            //assertEquals(expected, tm.getContents());
+            assertEquals(expected, tm.getContents());
             assertEquals("jtran", tm.getSender().displayName());
 
             TextMessage tm2 = new TextMessage(person2, "A text message1.");
             String expected2 = "bobby [" + date + "]: A text message1.";
-            //assertEquals(expected2, tm2.getContents());
+            assertEquals(expected2, tm2.getContents());
             assertEquals("bobby", tm2.getSender().displayName());
 
             TextMessage tm3 = new TextMessage(person3, "A text message2.");
             String expected3 = "<Tutor> ash [" + date + "]: A text message2.";
-            //assertEquals(expected3, tm3.getContents());
+            assertEquals(expected3, tm3.getContents());
             assertEquals("<Tutor> ash", tm3.getSender().displayName());
         } catch (OperationDeniedException ode) {
             fail("ODE should not be thrown");
@@ -222,56 +222,4 @@ public class MessengerApplicationTest {
         }
     }
 
-//    @Test(expected = OperationDeniedException.class)
-//    public void testMessage3() {
-//        String sentence1 = "I like dogs.";
-//        String sentence2 = "you are crazy.";
-//        String sentence3 = "that is not the answer.";
-//        test4 = new CodeMessage(person3, sentence3, 7);
-//        test5 = new CodeMessage(person2, sentence2, 8);
-//
-//    }
-
-    @Test(expected = OperationDeniedException.class)
-    public void testTextMessage2() {
-        User person1 = new Student("jtran", "Student");
-        User person2 = new Student("bobby", "Student");
-        User person3 = new Tutor("ash", "Tutor");
-        String sentence1 = "I like dogs.";
-        String sentence2 = "you are crazy.";
-        String sentence3 = "that is not the answer.";
-        try {
-            Message test4 = new CodeMessage(person3, sentence3, 7);
-            Message test5 = new CodeMessage(person2, sentence2, 8);
-        } catch (OperationDeniedException ODE) {
-        }
-//    @Test
-//    public void testTextMessage() {
-//        String sentence1 = "I like dogs.";
-//        String sentence2 = "you are crazy.";
-//        String sentence3 = "that is not the answer.";
-//        User person1 = new Student("jtran", "Student");
-//        User person2 = new Student("bobby", "Student");
-//        User person3 = new Tutor("ash", "Tutor");
-//        try {
-//            Message test1 = new TextMessage(person1, sentence1);
-//            Message test2 = new TextMessage(person2, sentence2);
-//            Message test3 = new TextMessage(person3, sentence3);
-//            Message test4 = new CodeMessage(person3, sentence3, 7);
-//            Message test5 = new CodeMessage(person2, sentence2, 8);
-//            Message test6 = new CodeMessage(person1, sentence1, 16);
-//            assertEquals(person1, test1.getSender());
-//            assertEquals(person2, test2.getSender());
-//            assertEquals(person3, test3.getSender());
-//            assertEquals(person3, test4.getSender());
-//            assertEquals(person2, test5.getSender());
-//            assertEquals(person1, test6.getSender());
-//        }
-//        catch (OperationDeniedException ODE) {
-//        }
-//        assertEquals("Student", person1.displayBio());
-//    }
-
-    }
 }
-

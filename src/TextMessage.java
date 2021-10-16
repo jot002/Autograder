@@ -12,7 +12,7 @@ public class TextMessage extends Message {
             throws OperationDeniedException {
         super(sender);
         this.contents = text;
-        if (text.length() > 500) {
+        if (text.length() > MAX_TEXT_LENGTH) {
             throw new OperationDeniedException(EXCEED_MAX_LENGTH);
         }
         if (sender == null || text == null) {

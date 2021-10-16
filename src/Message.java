@@ -24,7 +24,7 @@ public abstract class Message {
     }
 
     public User getSender() {
-        return sender;
+        return this.sender;
     }
 
     public abstract String getContents();

@@ -11,13 +11,13 @@ public class TextMessage extends Message {
     public TextMessage(User sender, String text)
             throws OperationDeniedException {
         super(sender);
-        this.contents = text;
         if (text.length() > MAX_TEXT_LENGTH) {
             throw new OperationDeniedException(EXCEED_MAX_LENGTH);
         }
         if (sender == null || text == null) {
             throw new IllegalArgumentException();
         }
+        this.contents = text;
     }
 
     // Yuxuan [16:38:36.868882500]: A sample text message.

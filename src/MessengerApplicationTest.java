@@ -124,7 +124,7 @@ public class MessengerApplicationTest {
         }
     }
 
-    @org.junit.Test (expected = IllegalArgumentException.class)
+    @org.junit.Test(expected = IllegalArgumentException.class)
     public void test3() {
         try {
             CodeMessage pm = new CodeMessage(null, "PA02.yml", 5);
@@ -160,7 +160,7 @@ public class MessengerApplicationTest {
         }
     }
 
-    @org.junit.Test (expected = IllegalArgumentException.class)
+    @org.junit.Test(expected = IllegalArgumentException.class)
     public void test5() {
         try {
             TextMessage pm = new TextMessage(null, "bye");
@@ -288,8 +288,7 @@ public class MessengerApplicationTest {
             person5.joinRoom(me1);
             person5.joinRoom(me2);
             person6.joinRoom(me3);
-        }
-        catch (OperationDeniedException ode) {
+        } catch (OperationDeniedException ode) {
             ode.getMessage();
         }
 //        person1.sendMessage(me1, "hi", 1);
@@ -332,44 +331,84 @@ public class MessengerApplicationTest {
             assertEquals(" ", tutor1.resolveTicket(person1));
             assertEquals(" ", tutor1.resolveTicket(person2));
             assertEquals(" ", tutor1.resolveTicket(person3));
-        }
-        catch (OperationDeniedException ode){
+        } catch (OperationDeniedException ode) {
             ode.getMessage();
         }
         ArrayList<String> empty = new ArrayList<String>();
-        assertEquals(empty,tutor1.getResults());
+        assertEquals(empty, tutor1.getResults());
 
 //        ArrayList<User> allUsers2 = new ArrayList<User>();
 //        allUsers2.add(person3);
 //        assertEquals(allUsers2, tutor1.getUsers());
         Autograder tutor2 = new Autograder(person6);
-        assertEquals(empty,tutor2.getResults());
+        assertEquals(empty, tutor2.getResults());
 
         Autograder tutor3 = new Autograder(person6);
-        assertEquals(empty,tutor3.getResults());
+        assertEquals(empty, tutor3.getResults());
         try {
             TextMessage tm = new TextMessage(person1, "A text message.");
             TextMessage tm2 = new TextMessage(person1, "A text message.");
             TextMessage tm3 = new TextMessage(person1, "A text message.");
-            assertEquals(true,tutor1.recordMessage(tm));
-            assertEquals(true,tutor1.recordMessage(tm2));
-            assertEquals(true,tutor1.recordMessage(tm3));
+            assertEquals(true, tutor1.recordMessage(tm));
+            assertEquals(true, tutor1.recordMessage(tm2));
+            assertEquals(true, tutor1.recordMessage(tm3));
             //person1.sendMessage(tutor1,"sup", 11);
 //            person2.sendMessage(tutor1,"sup", 11);
 //            person3.sendMessage(tutor1,"sup", 11);
 //            tutor1.fetchMessage(tm);
 
-        }
-        catch (OperationDeniedException ode){
+        } catch (OperationDeniedException ode) {
             ode.getMessage();
         }
 
 
-        assertEquals(true,tutor1.stopSession());
+        assertEquals(true, tutor1.stopSession());
         assertEquals(false, tutor1.stopSession());
         assertEquals(false, tutor1.stopSession());
 
+    }
+
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void failTest() {
+        Student man1 = new Student("man1", "man");
+        man1.fetchMessage(null);
+    }
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void failTest2() {
+        Tutor man2 = new Tutor("man1", "man");
+        man2.fetchMessage(null);
+    }
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void failTest3() {
+        Tutor man3 = new Tutor("man1", "man");
+        man3.fetchMessage(null);
+    }
+
+    @org.junit.Test(expected = OperationDeniedException.class)
+    public void failTest4() {
+        Tutor man3 = new Tutor("man1", "man");
+        Student man7 = new Student("j", "ahh");
+        Autograder man4 = new Autograder(man3);
+        try {
+            man4.resolveTicket(man7);
+        } catch (OperationDeniedException ode) {
+            ode.getMessage();
         }
 
+    }
+    @org.junit.Test(expected = OperationDeniedException.class)
+    public void failTest5() {
+        Tutor man3 = new Tutor("man1", "man");
+        Student man7 = new Student("j", "ahh");
+        Autograder man4 = new Autograder(man3);
+        try {
+            man4.resolveTicket(man7);
+        } catch (OperationDeniedException ode) {
+            ode.getMessage();
+        }
 
+    }
 }

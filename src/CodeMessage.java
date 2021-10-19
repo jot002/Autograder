@@ -1,3 +1,12 @@
+/*
+    Name: Jonathan Tran
+    PID:  A15967290
+ */
+/**
+ * CodeMessage is created to replicate code messages that will be sent into autograder.
+ * @author Jonathan Tran
+ * @since  10/18/21
+ */
 import java.util.Arrays;
 public class CodeMessage extends Message {
 
@@ -17,14 +26,25 @@ public class CodeMessage extends Message {
     private String extension;
     private int lines;
 
+    /**
+     * This constructor sets the date to the date today, the sender to sender,
+     * contents to codeSource, lines to lines, and returns an exception if
+     * sender or text is null, and throws OperationDeniedException if lines
+     * is less than 10 or if the extension is not acceptable. It also
+     * sets extension to the extension of the codeSource.
+     * @param sender the person who sent the message
+     * @param codeSource the source of the code
+     * @param lines the amount of lines of messages
+     * @exception IllegalArgumentException when sender or text is null
+     * @exception OperationDeniedException when lines is less than 10
+     * @exception OperationDeniedException when extension is not acceptable
+     */
     public CodeMessage(User sender, String codeSource, int lines)
             throws OperationDeniedException {
         super(sender);
-        this.contents = codeSource;
         String[] subparts = codeSource.split("\\.");
         String lastPart = subparts[subparts.length - 1];
         this.extension = lastPart.toLowerCase();
-        this.lines = lines;
         if (!Arrays.asList(ACCEPTABLE_EXTENSIONS).contains(extension)) {
             throw new OperationDeniedException(INVALID_INPUT);
         }
@@ -34,8 +54,14 @@ public class CodeMessage extends Message {
         if (sender == null || codeSource == null) {
             throw new IllegalArgumentException();
         }
+        this.lines = lines;
+        this.contents = codeSource;
     }
 
+    /**
+     * This method gets the contents of the message
+     * @return String sentence that displays the contents.
+     */
     public String getContents() {
         String senderName = this.getSender().displayName();;
         String dateTime = this.getDate().toString();
@@ -45,10 +71,18 @@ public class CodeMessage extends Message {
         return sentence;
     }
 
+    /**
+     * This method gets the extension
+     * @return String extension of the codeSource
+     */
     public String getExtension() {
         return this.extension;
     }
 
+    /**
+     * This method gets the number of lines of the message
+     * @return int number of lines
+     */
     public int getLines() {
         return this.lines;
     }

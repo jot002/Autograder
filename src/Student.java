@@ -1,5 +1,14 @@
+/*
+    Name: Jonathan Tran
+    PID:  A15967290
+ */
 import java.util.ArrayList;
-
+/**
+ * The Student class extends the User class. Users belonging to this
+ * class will have a limitation when fetching a message.
+ * @author Jonathan Tran
+ * @since  10/18/21
+ */
 public class Student extends User {
 
     // Message to append when fetching non-text message
@@ -8,7 +17,14 @@ public class Student extends User {
 
     // max number of messages to fetch
     private static final int MAX_MSG_SIZE = 100;
-
+    /**
+     * This constructor uses super to get set the same constructor
+     * from the User class.
+     * It throws an IllegalArgumentException if bio or username is null.
+     * @param username A string that contains the user's username
+     * @param bio a String that has the information of the user.
+     * @exception IllegalArgumentException when username or bio are null
+     */
     public Student(String username, String bio) {
         super(username, bio);
     }

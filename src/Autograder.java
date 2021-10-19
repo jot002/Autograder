@@ -1,6 +1,15 @@
+/*
+    Name: Jonathan Tran
+    PID:  A15967290
+ */
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * the Autograder class is created to implement MessageExchange.
+ * It moderates communication by keeping logs of messages of users.
+ * @author Jonathan Tran
+ * @since  10/18/21
+ */
 public class Autograder implements MessageExchange {
 
     // time allowed
@@ -25,6 +34,12 @@ public class Autograder implements MessageExchange {
     private ArrayList<String> results;
     private Tutor tutor;
 
+    /**
+     * This constructor sets the users, log, and results to a new ArrayList.
+     * It sets tutor to the argument tutor and adds the tutor to the
+     * autograder.
+     * @param tutor the tutor that is joining the autograder.
+     */
     public Autograder(Tutor tutor) {
         this.users = new ArrayList<User>();
         this.log = new ArrayList<Message>();

@@ -1,10 +1,27 @@
+/*
+    Name: Jonathan Tran
+    PID:  A15967290
+ */
 import java.util.ArrayList;
-
+/**
+ * The Tutor class extends the User class. Users belonging to this class
+ * will have no limitation of fetching messages. Also, they will have a
+ * custom title that will always display before the name.
+ * @author Jonathan Tran
+ * @since  10/18/21
+ */
 public class Tutor extends User {
 
     // instance variable
     private String customTitle;
-
+    /**
+     * This constructor uses super to get set the same constructor
+     * from the User class. It adds the customTitle of "Tutor".
+     * It throws an IllegalArgumentException if bio or username is null.
+     * @param username A string that contains the user's username
+     * @param bio a String that has the information of the user.
+     * @exception IllegalArgumentException when username or bio are null
+     */
     public Tutor(String username, String bio) {
         super(username, bio);
         this.customTitle = "Tutor";

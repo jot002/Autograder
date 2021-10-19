@@ -1,5 +1,14 @@
+/*
+    Name: Jonathan Tran
+    PID:  A15967290
+ */
 import java.util.ArrayList;
-
+/**
+ * The User class is the abstract class that defines the functionality
+ * of a user in our messaging app.
+ * @author Jonathan Tran
+ * @since  10/18/21
+ */
 public abstract class User {
 
     // Error message to use in OperationDeniedException
@@ -13,20 +22,28 @@ public abstract class User {
     protected String bio;
     protected ArrayList<MessageExchange> rooms;
 
+    /**
+     * This constructor sets rooms to a new ArrayList, username to the
+     * argument username, and bio to the argument bio.
+     * It throws an IllegalArgumentException if bio or username is null.
+     * @param username A string that contains the user's username
+     * @param bio a String that has the information of the user.
+     * @exception IllegalArgumentException when username or bio are null
+     */
     public User(String username, String bio) {
-        this.rooms = new ArrayList<MessageExchange>();
-        this.username = username;
-        this.bio = bio;
         if (bio == null || username == null) {
             throw new IllegalArgumentException();
         }
+        this.rooms = new ArrayList<MessageExchange>();
+        this.username = username;
+        this.bio = bio;
     }
 
     public void setBio(String newBio) {
-        this.bio = newBio;
         if (newBio == null) {
             throw new IllegalArgumentException();
         }
+        this.bio = newBio;
     }
 
     public String displayBio() {

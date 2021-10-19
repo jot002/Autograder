@@ -73,7 +73,7 @@ public class CodeMessage extends Message {
         String dateTime = this.getDate().toString();
         String sampleText = this.contents;
         // creates a sentence with all the details
-        String sentence = String.format("% [%]: Code at %", senderName,
+        String sentence = String.format("%s [%s]: Code at %s", senderName,
                 dateTime, sampleText);
         return sentence;
     }

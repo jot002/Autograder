@@ -61,11 +61,11 @@ public class Autograder implements MessageExchange {
         }
         // checks if requester is an instance of Tutor
         if (requester instanceof Tutor) {
-            return this.getLog(requester);
+            return this.log;
         }
         // checks if requester is an instance of Student
         if (requester instanceof Student) {
-            if (this.getLog(requester).size() < MAX_MSG_SIZE) {
+            if (this.log.size() < MAX_MSG_SIZE) {
                 return this.log;
             }
             else {
@@ -190,8 +190,8 @@ public class Autograder implements MessageExchange {
                 if (answer > DEFAULT_ALLOTTED_TIME) {
                     int resolved = DEFAULT_ALLOTTED_TIME;
                     int unresolved = answer - DEFAULT_ALLOTTED_TIME;
-                    String sentence = String.format("This ticket resolves % " +
-                            "lines, % lines unresolved", resolved, unresolved);
+                    String sentence = String.format("This ticket resolves %d " +
+                            "lines, %d lines unresolved", resolved, unresolved);
                     this.results.add(sentence);
                     return sentence;
                 }
@@ -199,8 +199,8 @@ public class Autograder implements MessageExchange {
                     int resolved= answer;
                     int unresolved = 0;
                     // creates a sentence describing the lines
-                    String sentence = String.format("This ticket resolves % " +
-                            "lines, % lines unresolved", resolved, unresolved);
+                    String sentence = String.format("This ticket resolves %d " +
+                            "lines, %d lines unresolved", resolved, unresolved);
                     this.results.add(sentence);
                     return sentence;
                 }
@@ -225,15 +225,17 @@ public class Autograder implements MessageExchange {
         if (this.tutor == null) {
             return false;
         }
+        this.users = new ArrayList<User>();
         // goes through all the users
-        for (User person : this.users) {
-            // removes everyone from users
-            this.users.remove(person);
-        }
+//        for (User person : this.users) {
+//            // removes everyone from users
+//            this.users.remove(person);
+//        }
         // removes all messages from the log
-        for (Message logX : this.log) {
-            this.log.remove(logX);
-        }
+        this.log = new ArrayList<Message>();
+//        for (Message logX : this.log) {
+//            this.log.remove(logX);
+//        }
         this.tutor = null;
         return true;
     }

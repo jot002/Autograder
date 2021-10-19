@@ -48,6 +48,11 @@ public class Autograder implements MessageExchange {
         this.addUser(tutor);
     }
 
+    /**
+     * This method gets the message log of the autograder.
+     * @param requester the requester is a User that wants the logs
+     * @return ArrayList of messages that shows the messages
+     */
     public ArrayList<Message> getLog(User requester) {
         if (this.tutor == null) {
             return null;
@@ -71,6 +76,10 @@ public class Autograder implements MessageExchange {
         return null;
     }
 
+    /**
+     * This method gets the results of the autograder room
+     * @return ArrayList of strings that shows the results.
+     */
     public ArrayList<String> getResults(){
         if (this.tutor == null) {
             return null;
@@ -78,6 +87,11 @@ public class Autograder implements MessageExchange {
         return this.results;
     }
 
+    /**
+     * This method adds the user u to the autograder room
+     * @param u A user that will be added
+     * @return boolean stating true if the user got added, false if not
+     */
     public boolean addUser(User u) {
         if (this.tutor == null) {
             return false;
@@ -90,6 +104,10 @@ public class Autograder implements MessageExchange {
         }
     }
 
+    /**
+     * This method removes the user from the autograder.
+     * @return boolean stating true if the person got removed, false if not
+     */
     public boolean removeUser(User requester, User u) {
         if (this.tutor == null) {
             return false;
@@ -110,6 +128,10 @@ public class Autograder implements MessageExchange {
         return false;
     }
 
+    /**
+     * This method gets all the users in the autograder room
+     * @return ArrayList containing the users who are in the room
+     */
     public ArrayList<User> getUsers() {
         if (this.tutor == null) {
             return null;
@@ -117,6 +139,11 @@ public class Autograder implements MessageExchange {
         return this.users;
     }
 
+    /**
+     * This method records a message and adds it the log.
+     * @param m a Message
+     * @return boolean stating true if it it got added, false if not
+     */
     public boolean recordMessage(Message m) {
         if (this.tutor == null) {
             return false;
@@ -125,6 +152,16 @@ public class Autograder implements MessageExchange {
         return true;
     }
 
+    /**
+     * This method resolves a ticket and checks the type of messages that are
+     * in the log. if the session has ended, it will throw exceptions.
+     * @param requester a User that is asking to resolve the ticket
+     * @return String setnence that tells how many resolved and unresolved
+     * tickets there are.
+     * @exception OperationDeniedException when session has ended
+     * @exception OperationDeniedException if the requester is a student
+     * @exception OperationDeniedException the size of the log is 0
+     */
     public String resolveTicket(User requester) throws OperationDeniedException {
         if (this.tutor == null) {
             throw new OperationDeniedException(SESSION_ENDED);
@@ -155,7 +192,6 @@ public class Autograder implements MessageExchange {
                     this.results.add(sentence);
                     return sentence;
                 }
-
             }
             else {
                 String sentence = "This ticket doesn’t resolve a codeMessage";
@@ -165,6 +201,12 @@ public class Autograder implements MessageExchange {
         }
         return null;
     }
+
+    /**
+     * This method ends the autograder session.
+     * @return boolean stating true if the session ended, false if it was
+     * already ended
+     */
     public boolean stopSession(){
         if (this.tutor == null) {
             return false;

@@ -17,6 +17,7 @@ public class Student extends User {
 
     // max number of messages to fetch
     private static final int MAX_MSG_SIZE = 100;
+
     /**
      * This constructor uses super to get set the same constructor
      * from the User class.
@@ -29,6 +30,13 @@ public class Student extends User {
         super(username, bio);
     }
 
+    /**
+     * This method fetches a message from the MessageExchange me
+     * @param me MessageExchange where the message will be taken from
+     * @return String message from me
+     * @exception IllegalArgumentException when me is null
+     * @exception IllegalArgumentException when rooms does not contain me
+     */
     public String fetchMessage(MessageExchange me) {
         if (me == null) {
             throw new IllegalArgumentException();
@@ -64,6 +72,10 @@ public class Student extends User {
         }
     }
 
+    /**
+     * This method returns the username of the student
+     * @return String username of the student
+     */
     public String displayName() {
         return this.username;
     }

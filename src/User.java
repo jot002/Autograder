@@ -39,6 +39,10 @@ public abstract class User {
         this.bio = bio;
     }
 
+    /**
+     * This method sets the original bio to newBio
+     * @param newBio a string that will be the new bio
+     */
     public void setBio(String newBio) {
         if (newBio == null) {
             throw new IllegalArgumentException();
@@ -46,10 +50,22 @@ public abstract class User {
         this.bio = newBio;
     }
 
+    /**
+     * This method displays the bio
+     * @return String the bio of the user
+     */
     public String displayBio() {
         return this.bio;
     }
 
+    /**
+     * This method joins the user into the room.
+     * @param me MessageExchange room that the user could join
+     * @exception IllegalArgumentException when me is null
+     * @exception OperationDeniedException when user is already in the room
+     * @exception IllegalArgumentException when the user can not be
+     * added into the room
+     */
     public void joinRoom(MessageExchange me) throws OperationDeniedException {
         if (me == null) {
             throw new IllegalArgumentException();
@@ -62,18 +78,30 @@ public abstract class User {
         }
     }
 
+    /**
+     * This method takes the user out of the room
+     * @param me MessageExchange room that the user will quit
+     * @exception IllegalArgumentException when me is null
+     */
     public void quitRoom(MessageExchange me) {
         if (me == null) {
             throw new IllegalArgumentException();
         }
         me.removeUser(this, this);
-
     }
 
+    /**
+     * This method sends the message to the message exchange room.
+     * @param me MessageExchange room that the user will quit
+     * @param contents a String containing the contents
+     * @param lines the number of lines in the message
+     * @exception IllegalArgumentException when me or contents is null
+     * @exception IllegalArgumentException when rooms does not contain me
+     * @exception OperationDeniedException when inputs are invalid.
+     */
     public void sendMessage(MessageExchange me, String contents, int lines) {
         if (me == null || contents == null) {
             throw new IllegalArgumentException();
-
         }
         if (!this.rooms.contains(me)) {
             throw new IllegalArgumentException();
@@ -85,7 +113,8 @@ public abstract class User {
                 me.recordMessage(newMessage);
             }
             else {
-                CodeMessage newMessage = new CodeMessage(this, contents, lines);
+                CodeMessage newMessage = new CodeMessage(this,
+                        contents, lines);
                 // send to message exchange room
                 me.recordMessage(newMessage);
             }
@@ -93,10 +122,17 @@ public abstract class User {
         catch (OperationDeniedException ODE){
             System.out.println(ODE.getMessage());
         }
-
     }
 
+    /**
+     * This abstract method is created so the subclasses have to implement it
+     * @return String message from me
+     */
     public abstract String fetchMessage(MessageExchange me);
 
+    /**
+     * This abstract method is created to display the name
+     * @return String name
+     */
     public abstract String displayName();
 }

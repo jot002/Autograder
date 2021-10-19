@@ -27,6 +27,13 @@ public class Tutor extends User {
         this.customTitle = "Tutor";
     }
 
+    /**
+     * This method fetches a message from the MessageExchange me
+     * @param me MessageExchange where the message will be taken from
+     * @return String message from me
+     * @exception IllegalArgumentException when me is null
+     * @exception IllegalArgumentException when rooms does not contain me
+     */
     public String fetchMessage(MessageExchange me) {
         if (me == null) {
             throw new IllegalArgumentException();
@@ -41,16 +48,30 @@ public class Tutor extends User {
         return sentence;
     }
 
+    /**
+     * This method displays the name of the tutor
+     * @return String name of the tutor
+     */
     public String displayName() {
         String sentence = String.format("<%s> %s", this.customTitle,
                 this.username);
         return sentence;
     }
 
+    /**
+     * This method sets the custom title to a new title
+     * @param newTitle the new title that will the custom title.
+     */
     public void setCustomTitle(String newTitle) {
         this.customTitle = newTitle;
     }
 
+    /**
+     * This method creates the autograder that will be used by the other classes.
+     * @param users an ArrayList<User> that contains all the users
+     * @return MessageExchange a platform where the autograder is created.
+     * @exception OperationDeniedException
+     */
     public MessageExchange createAutograder(ArrayList<User> users) {
         Autograder autograder = new Autograder(this);
         for (User person : users) {

@@ -18,6 +18,8 @@ public class Autograder implements MessageExchange {
     // max number of messages to fetch
     private static final int MAX_MSG_SIZE = 100;
 
+    private static final double TENTH_CONVERSION = 10.0;
+
     // Error message to use in OperationDeniedException
     protected static final String SESSION_ENDED =
             "Session has already ended. Ticket can't be resolved";
@@ -57,15 +59,18 @@ public class Autograder implements MessageExchange {
         if (this.tutor == null) {
             return null;
         }
+        // checks if requester is an instance of Tutor
         if (requester instanceof Tutor) {
             return this.getLog(requester);
         }
+        // checks if requester is an instance of Student
         if (requester instanceof Student) {
-            if (this.getLog(requester).size() < 100) {
+            if (this.getLog(requester).size() < MAX_MSG_SIZE) {
                 return this.log;
             }
             else {
                 ArrayList<Message> newLog = new ArrayList<Message>();
+                // goes through the index of the log from the back
                 for (int i = this.log.size() - MAX_MSG_SIZE;
                        i < this.log.size(); i++) {
                 newLog.add(this.log.get(i));
@@ -97,6 +102,7 @@ public class Autograder implements MessageExchange {
             return false;
         }
         if (!this.users.contains(u)) {
+            // adds u if u is not in users
             this.users.add(u);
             return true;
         } else {
@@ -115,11 +121,13 @@ public class Autograder implements MessageExchange {
         if (!this.users.contains(u)) {
             return false;
         }
+        // checks the type of requester and u
         if (requester instanceof Tutor && u instanceof Student) {
             this.users.remove(u);
             u.rooms.remove(u);
             return true;
         }
+        // checks the type of requester and u
         if (requester instanceof Student && u instanceof Student) {
             this.users.remove(u);
             u.rooms.remove(u);
@@ -172,13 +180,16 @@ public class Autograder implements MessageExchange {
         if (this.log.size() == 0) {
             throw new OperationDeniedException(NO_LOGS);
         }
+        // goes through all the messages of this.log
         for (Message logX : this.log) {
+            // checks if logX is an instance of CodeMessage
             if (logX instanceof CodeMessage) {
                 int numLines = ((CodeMessage) logX).getLines();
-                int answer = (int) Math.ceil(numLines / 10.0);
-                if (answer > 15) {
-                    int resolved = 15;
-                    int unresolved = answer - 15;
+                // gets how much the time will be
+                int answer = (int) Math.ceil(numLines / TENTH_CONVERSION);
+                if (answer > DEFAULT_ALLOTTED_TIME) {
+                    int resolved = DEFAULT_ALLOTTED_TIME;
+                    int unresolved = answer - DEFAULT_ALLOTTED_TIME;
                     String sentence = String.format("This ticket resolves % " +
                             "lines, % lines unresolved", resolved, unresolved);
                     this.results.add(sentence);
@@ -187,12 +198,14 @@ public class Autograder implements MessageExchange {
                 else {
                     int resolved= answer;
                     int unresolved = 0;
+                    // creates a sentence describing the lines
                     String sentence = String.format("This ticket resolves % " +
                             "lines, % lines unresolved", resolved, unresolved);
                     this.results.add(sentence);
                     return sentence;
                 }
             }
+            // checks if logX is not an instance of CodeMessage
             else {
                 String sentence = "This ticket doesn’t resolve a codeMessage";
                 this.results.add(sentence);
@@ -208,12 +221,16 @@ public class Autograder implements MessageExchange {
      * already ended
      */
     public boolean stopSession(){
+        // checks if the session has ended already
         if (this.tutor == null) {
             return false;
         }
+        // goes through all the users
         for (User person : this.users) {
+            // removes everyone from users
             this.users.remove(person);
         }
+        // removes all messages from the log
         for (Message logX : this.log) {
             this.log.remove(logX);
         }

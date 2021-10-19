@@ -30,10 +30,14 @@ public class TextMessage extends Message {
     public TextMessage(User sender, String text)
             throws OperationDeniedException {
         super(sender);
+        // throws an exception if the text length is too big
         if (text.length() > MAX_TEXT_LENGTH) {
             throw new OperationDeniedException(EXCEED_MAX_LENGTH);
         }
-        if (sender == null || text == null) {
+        if (sender == null) {
+            throw new IllegalArgumentException();
+        }
+        if (text == null) {
             throw new IllegalArgumentException();
         }
         this.contents = text;
@@ -48,6 +52,7 @@ public class TextMessage extends Message {
         String senderName = this.getSender().displayName();;
         String dateTime = this.getDate().toString();
         String sampleText = this.contents;
+        // creates a sentence with all the details
         String sentence = String.format("%s [%s]: %s", senderName,
                 dateTime, sampleText);
         return sentence;

@@ -18,6 +18,8 @@ public class CodeMessage extends Message {
     private static final String INVALID_CODE =
             "The files are not long enough.";
 
+    private static final int CHECKING_LENGTH = 10;
+
     // input validation criteria
     private static final String[] ACCEPTABLE_EXTENSIONS =
             new String[]{"html", "java", "py", "mjs", "ipynb", "md", "yml"};
@@ -42,16 +44,20 @@ public class CodeMessage extends Message {
     public CodeMessage(User sender, String codeSource, int lines)
             throws OperationDeniedException {
         super(sender);
+        // splits the codeSource to get the extension
         String[] subparts = codeSource.split("\\.");
         String lastPart = subparts[subparts.length - 1];
         this.extension = lastPart.toLowerCase();
         if (!Arrays.asList(ACCEPTABLE_EXTENSIONS).contains(extension)) {
             throw new OperationDeniedException(INVALID_INPUT);
         }
-        if (lines < 10) {
+        if (lines < CHECKING_LENGTH) {
             throw new OperationDeniedException(INVALID_CODE);
         }
-        if (sender == null || codeSource == null) {
+        if (sender == null) {
+            throw new IllegalArgumentException();
+        }
+        if (codeSource == null) {
             throw new IllegalArgumentException();
         }
         this.lines = lines;
@@ -66,6 +72,7 @@ public class CodeMessage extends Message {
         String senderName = this.getSender().displayName();;
         String dateTime = this.getDate().toString();
         String sampleText = this.contents;
+        // creates a sentence with all the details
         String sentence = String.format("% [%]: Code at %", senderName,
                 dateTime, sampleText);
         return sentence;

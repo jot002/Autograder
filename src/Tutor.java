@@ -42,6 +42,7 @@ public class Tutor extends User {
             throw new IllegalArgumentException();
         }
         String sentence = "";
+        // goes through the messages of me
         for (Message piece :  me.getLog(this)) {
             sentence = sentence + piece.getContents() + "\n";
         }
@@ -73,11 +74,15 @@ public class Tutor extends User {
      * @exception OperationDeniedException
      */
     public MessageExchange createAutograder(ArrayList<User> users) {
+        // creates a new autograder
         Autograder autograder = new Autograder(this);
+        // iterates through the people in users
         for (User person : users) {
+            // tries to have them join the autograder
             try {
                 person.joinRoom(autograder);
             }
+            // sends a message if they can't join
             catch (OperationDeniedException ODE) {
                 ODE.getMessage();
             }

@@ -9,8 +9,8 @@ import static org.junit.Assert.*;
 
 /**
  * Messenger Application Test
- * @author TODO
- * @since  TODO
+ * @author Jonathan Tran
+ * @since  10/18/21
  */
 public class MessengerApplicationTest {
 
@@ -103,7 +103,7 @@ public class MessengerApplicationTest {
         }
     }
 
-    @Test
+    @org.junit.Test
     public void testCodeMessages3() {
         try {
             CodeMessage tm = new CodeMessage(person1, "PA02.zip", 5);
@@ -112,7 +112,7 @@ public class MessengerApplicationTest {
         }
     }
 
-    @Test
+    @org.junit.Test
     public void test2() {
         try {
             CodeMessage pm = new CodeMessage(person2, "PA02.yml", 5);
@@ -122,7 +122,7 @@ public class MessengerApplicationTest {
         }
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @org.junit.Test (expected = IllegalArgumentException.class)
     public void test3() {
         try {
             CodeMessage pm = new CodeMessage(null, "PA02.yml", 5);
@@ -133,7 +133,7 @@ public class MessengerApplicationTest {
         }
     }
 
-    @Test
+    @org.junit.Test
     public void testCodeMessages2() {
         try {
             CodeMessage tm = new CodeMessage(person1, "PA02.yml", 11);
@@ -160,18 +160,17 @@ public class MessengerApplicationTest {
         }
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @org.junit.Test (expected = IllegalArgumentException.class)
     public void test5() {
         try {
             TextMessage pm = new TextMessage(null, "bye");
             fail("Exception not thrown"); // will execute if last line didn't throw exception
         } catch (OperationDeniedException ode) {
             throw new IllegalArgumentException();
-
         }
     }
 
-    @Test
+    @org.junit.Test
     public void test7() {
         String longSentence = "";
         for (int i = 0; i < 550; i++) {
@@ -184,7 +183,6 @@ public class MessengerApplicationTest {
             assertEquals(EXCEED_MAX_LENGTH, ode.getMessage());
         }
     }
-
 
     @Test
     public void testTextMessages2() {

@@ -70,10 +70,12 @@ public abstract class User {
         if (me == null) {
             throw new IllegalArgumentException();
         }
+        // if the user is already in the room, throw an exception
         if (rooms.contains(this)) {
             throw new OperationDeniedException(JOIN_ROOM_FAILED);
         }
-        if (me.addUser(this) == false) {
+        // if the user can not be added to me
+        if (!me.addUser(this)) {
             throw new OperationDeniedException(JOIN_ROOM_FAILED);
         }
     }
@@ -87,6 +89,7 @@ public abstract class User {
         if (me == null) {
             throw new IllegalArgumentException();
         }
+        // removes the user from me
         me.removeUser(this, this);
     }
 
@@ -100,18 +103,24 @@ public abstract class User {
      * @exception OperationDeniedException when inputs are invalid.
      */
     public void sendMessage(MessageExchange me, String contents, int lines) {
-        if (me == null || contents == null) {
+        if (me == null) {
             throw new IllegalArgumentException();
         }
+        if (contents == null) {
+            throw new IllegalArgumentException();
+        }
+        // if the rooms does not contain me
         if (!this.rooms.contains(me)) {
             throw new IllegalArgumentException();
         }
         try {
+            // if lines = -1, that means TextMessage
             if (lines == -1) {
                 TextMessage newMessage = new TextMessage(this, contents);
                 // send to message exchange room
                 me.recordMessage(newMessage);
             }
+            // if lines is not -1
             else {
                 CodeMessage newMessage = new CodeMessage(this,
                         contents, lines);

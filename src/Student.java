@@ -41,15 +41,19 @@ public class Student extends User {
         if (me == null) {
             throw new IllegalArgumentException();
         }
+        // if the rooms does not contain me
         if (!this.rooms.contains(me)) {
             throw new IllegalArgumentException();
         }
         if (me.getLog(this).size() < MAX_MSG_SIZE) {
             String sentence = "";
+            // goes through all the messages
             for (Message piece :  me.getLog(this)) {
+                // checks if the message is a TextMessage
                 if (piece instanceof TextMessage) {
                     sentence = sentence + piece.getContents() + "\n";
                 }
+                // when the message is not a TextMessage
                 else {
                     sentence = sentence + FETCH_DENIED_MSG + "\n";
                 }
@@ -59,8 +63,10 @@ public class Student extends User {
         // fetch the last 100 messages
         else {
             String sentence = "";
+            // getting the last 100 messages only
             for (int i = me.getLog(this).size() - MAX_MSG_SIZE;
                  i < me.getLog(this).size(); i++) {
+                // checks if the message is a TextMessage
                 if (me.getLog(this).get(i) instanceof TextMessage) {
                     sentence = sentence + me.getLog(this).get(i) + "\n";
                 }
